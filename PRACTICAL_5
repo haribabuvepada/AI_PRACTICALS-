@@ -1,0 +1,19 @@
+# Simple Rule-Based Expert System
+
+print("Disease Diagnosis System")
+
+fever = input("Do you have fever? ")
+cough = input("Do you have cough? ")
+cold = input("Do you have cold? ")
+
+if fever == "yes" and cough == "yes":
+    print("Diagnosis: Flu")
+
+elif cold == "yes" and cough == "yes":
+    print("Diagnosis: Common Cold")
+
+elif fever == "yes":
+    print("Diagnosis: Fever")
+
+else:
+    print("Diagnosis: No disease detected")
