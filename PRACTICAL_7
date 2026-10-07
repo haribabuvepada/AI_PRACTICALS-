@@ -1,0 +1,35 @@
+# Simple Bayesian Network
+# Disease Diagnosis
+
+# P(Fever)
+P_Fever_Yes = 0.3
+P_Fever_No = 0.7
+
+# P(Cough)
+P_Cough_Yes = 0.4
+P_Cough_No = 0.6
+
+# P(Flu | Fever, Cough)
+P_Flu = {
+    ("yes", "yes"): 0.90,
+    ("yes", "no"): 0.70,
+    ("no", "yes"): 0.30,
+    ("no", "no"): 0.05
+}
+
+# Get input
+fever = input("Does the patient have fever? ").lower()
+cough = input("Does the patient have cough? ").lower()
+
+# Find probability
+probability = P_Flu[(fever, cough)]
+
+print("\n--- Bayesian Network Result ---")
+print("Fever :", fever)
+print("Cough :", cough)
+print("Probability of Flu :", probability)
+
+if probability >= 0.5:
+    print("Diagnosis: Flu is likely")
+else:
+    print("Diagnosis: Flu is unlikely")
