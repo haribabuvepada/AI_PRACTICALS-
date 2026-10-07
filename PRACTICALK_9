@@ -1,0 +1,55 @@
+# STRIPS Planning - Blocks World
+
+# Initial state
+state = {
+    "A_on_table": True,
+    "B_on_table": True,
+    "A_clear": True,
+    "B_clear": True
+}
+
+# Goal state
+goal = {
+    "A_on_B": True
+}
+
+# Planning
+plan = []
+
+# Check if goal is already achieved
+if state.get("A_on_B", False):
+    print("Goal already achieved.")
+
+else:
+    # Preconditions for Move A onto B
+    if state["A_clear"] and state["B_clear"]:
+
+        # Action: Pick A
+        plan.append("Pick up A")
+
+        # Action: Move A onto B
+        plan.append("Put A on B")
+
+        # Update state
+        state["A_on_table"] = False
+        state["A_on_B"] = True
+        state["A_clear"] = False
+
+# Display plan
+print("Initial State:")
+print("A is on table")
+print("B is on table")
+
+print("\nGoal:")
+print("A should be on B")
+
+print("\nPlan:")
+for step in plan:
+    print(step)
+
+print("\nFinal State:")
+if state["A_on_B"]:
+    print("A is on B")
+    print("Goal achieved!")
+else:
+    print("Goal not achieved.")
