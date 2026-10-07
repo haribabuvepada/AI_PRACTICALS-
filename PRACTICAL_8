@@ -1,0 +1,33 @@
+# Mini AI Application - Text Classification
+
+positive_words = ["good", "great", "excellent", "happy", "love", "amazing"]
+negative_words = ["bad", "worst", "poor", "sad", "hate", "terrible"]
+
+text = input("Enter a sentence: ").lower()
+
+positive = 0
+negative = 0
+
+words = text.split()
+
+for word in words:
+    if word in positive_words:
+        positive += 1
+
+    if word in negative_words:
+        negative += 1
+
+if positive > negative:
+    result = "Positive"
+
+elif negative > positive:
+    result = "Negative"
+
+else:
+    result = "Neutral"
+
+print("\n--- AI Text Classification ---")
+print("Input:", text)
+print("Positive words:", positive)
+print("Negative words:", negative)
+print("Classification:", result)
