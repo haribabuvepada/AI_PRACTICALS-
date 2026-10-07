@@ -1,0 +1,122 @@
+# Value Iteration - Grid World
+
+grid = [
+    ["S", ".", "."],
+    [".", "#", "."],
+    [".", ".", "G"]
+]
+
+rows = 3
+cols = 3
+
+# Initial values
+values = [[0 for j in range(cols)] for i in range(rows)]
+
+gamma = 0.9
+
+# Rewards
+def reward(i, j):
+    if grid[i][j] == "G":
+        return 10
+    elif grid[i][j] == "#":
+        return 0
+    else:
+        return -1
+
+
+# Get possible movements
+actions = [
+    (-1, 0),  # Up
+    (1, 0),   # Down
+    (0, -1),  # Left
+    (0, 1)    # Right
+]
+
+
+# Value Iteration
+for iteration in range(20):
+
+    new_values = [[0 for j in range(cols)] for i in range(rows)]
+
+    for i in range(rows):
+        for j in range(cols):
+
+            if grid[i][j] == "#":
+                continue
+
+            if grid[i][j] == "G":
+                new_values[i][j] = 10
+                continue
+
+            best_value = -999
+
+            for di, dj in actions:
+
+                ni = i + di
+                nj = j + dj
+
+                # Check boundary
+                if 0 <= ni < rows and 0 <= nj < cols:
+
+                    # Don't move into obstacle
+                    if grid[ni][nj] != "#":
+
+                        value = reward(ni, nj) + gamma * values[ni][nj]
+
+                        if value > best_value:
+                            best_value = value
+
+            new_values[i][j] = best_value
+
+    values = new_values
+
+
+# Display values
+print("Value Function:\n")
+
+for row in values:
+    print(["{:.2f}".format(x) for x in row])
+
+
+# Find best policy
+print("\nPolicy:\n")
+
+symbols = {
+    (-1, 0): "↑",
+    (1, 0): "↓",
+    (0, -1): "←",
+    (0, 1): "→"
+}
+
+for i in range(rows):
+    row = []
+
+    for j in range(cols):
+
+        if grid[i][j] == "#":
+            row.append("#")
+
+        elif grid[i][j] == "G":
+            row.append("G")
+
+        else:
+            best_value = -999
+            best_action = None
+
+            for di, dj in actions:
+
+                ni = i + di
+                nj = j + dj
+
+                if 0 <= ni < rows and 0 <= nj < cols:
+                    if grid[ni][nj] != "#":
+
+                        value = reward(ni, nj) + gamma * values[ni][nj]
+
+                        if value > best_value:
+                            best_value = value
+                            best_action = (di, dj)
+
+            row.append(symbols[best_action])
+
+    print(row)
